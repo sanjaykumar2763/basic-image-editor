@@ -1,0 +1,37 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to Basic image editor
+  </h1>
+  
+  <canvas id="image-editor" width="900" height="400"></canvas>
+
+  <br>
+
+  <div class="components">
+    <button (click)="onAddRectangle()">Reactangle</button>
+    <button (click)="onAddCircle()">Circle</button>
+    <button (click)="onAddText()">Text</button>
+    <button (click)="onAddBrush()">Brush</button>
+    <button (click)="onAddLine()">Line</button>
+    
+    <button (click)="onDelete()">Delete</button>
+  </div>
+
+  <br>
+  <div class="colors">
+    <div class="c1" (click)="onSelectColor('c1', '#f44336')"
+      [ngClass]="{'selected-color': activeCid == 'c1'}"></div>
+    <div class="c2" (click)="onSelectColor('c2', '#3f51b5')"
+      [ngClass]="{'selected-color': activeCid == 'c2'}"></div>
+    <div class="c3" (click)="onSelectColor('c3', '#8bc34a')"
+      [ngClass]="{'selected-color': activeCid == 'c3'}"></div>
+    <div class="c4" (click)="onSelectColor('c4', '#ffc107')"
+      [ngClass]="{'selected-color': activeCid == 'c4'}"></div>
+    <div class="c5" (click)="onSelectColor('c5', 'white')"
+      [ngClass]="{'selected-color': activeCid == 'c5'}"></div>
+    <div class="c6" (click)="onSelectColor('c6', 'black')"
+      [ngClass]="{'selected-color': activeCid == 'c6'}"></div>
+  </div>
+</div>
+

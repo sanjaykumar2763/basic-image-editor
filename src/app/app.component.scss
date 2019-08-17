@@ -1,0 +1,36 @@
+#image-editor {
+    border: 1px solid red;
+}
+
+.colors div {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.c1 {
+    background-color: #f44336;
+}
+.c2 {
+    background-color: #3f51b5;
+}
+.c3 {
+    background-color: #8bc34a;
+}
+.c4 {
+    background-color: #ffc107;
+}
+.c5 {
+    background-color: white;
+    border: 1px solid black;
+}
+.c6 {
+    background-color: black;
+}
+
+.selected-color {
+    box-shadow: 0 0 5px 4px;
+}
