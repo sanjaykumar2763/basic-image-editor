@@ -1,37 +1,58 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to Basic image editor
-  </h1>
-  
-  <canvas id="image-editor" width="900" height="400"></canvas>
+<div>
+  <h1 class="text-center">Basic Image Editor</h1>
 
-  <br>
+  <div class="container">
+    <div class="row">
+      <div class="m-auto">
+        <canvas id="image-editor" width="900" height="400"></canvas>
+      </div>
+    </div>
 
-  <div class="components">
-    <button (click)="onAddRectangle()">Reactangle</button>
-    <button (click)="onAddCircle()">Circle</button>
-    <button (click)="onAddText()">Text</button>
-    <button (click)="onAddBrush()">Brush</button>
-    <button (click)="onAddLine()">Line</button>
-    
-    <button (click)="onDelete()">Delete</button>
-  </div>
+    <div class="row mt-3">
+      <div class="m-auto">
+        <div class="components">
+          <button class="btn btn-primary mr-1" (click)="onAddRectangle()">
+            <i class="fa fa-square-o fa-2x"></i>
+          </button>
+          <button class="btn btn-primary mr-1" (click)="onAddCircle()">
+            <i class="fa fa-circle-o fa-2x"></i>
+          </button>
+          <button class="btn btn-primary mr-1" (click)="onAddText()">
+            <i class="fa fa-font fa-2x"></i>
+          </button>
+          <button class="btn btn-primary mr-1" (click)="onAddBrush()">
+            <i class="fa fa-paint-brush fa-2x"></i>
+          </button>
+          <button class="btn btn-primary mr-1" (click)="onAddLine()">
+            <i class="fa fa-arrow-right fa-2x"></i>
+          </button>
+          
+          <button class="btn btn-danger" (click)="onDelete()">
+            <i class="fa fa-trash fa-2x"></i>
+          </button>
+        </div>
+      </div>
+    </div>
 
-  <br>
-  <div class="colors">
-    <div class="c1" (click)="onSelectColor('c1', '#f44336')"
-      [ngClass]="{'selected-color': activeCid == 'c1'}"></div>
-    <div class="c2" (click)="onSelectColor('c2', '#3f51b5')"
-      [ngClass]="{'selected-color': activeCid == 'c2'}"></div>
-    <div class="c3" (click)="onSelectColor('c3', '#8bc34a')"
-      [ngClass]="{'selected-color': activeCid == 'c3'}"></div>
-    <div class="c4" (click)="onSelectColor('c4', '#ffc107')"
-      [ngClass]="{'selected-color': activeCid == 'c4'}"></div>
-    <div class="c5" (click)="onSelectColor('c5', 'white')"
-      [ngClass]="{'selected-color': activeCid == 'c5'}"></div>
-    <div class="c6" (click)="onSelectColor('c6', 'black')"
-      [ngClass]="{'selected-color': activeCid == 'c6'}"></div>
+    <div class="row mt-3">
+      <div class="m-auto">
+        <div class="colors">
+          <div class="c1" (click)="onSelectColor('c1', '#f44336')"
+            [ngClass]="{'selected-color': activeCid == 'c1'}"></div>
+          <div class="c2" (click)="onSelectColor('c2', '#3f51b5')"
+            [ngClass]="{'selected-color': activeCid == 'c2'}"></div>
+          <div class="c3" (click)="onSelectColor('c3', '#8bc34a')"
+            [ngClass]="{'selected-color': activeCid == 'c3'}"></div>
+          <div class="c4" (click)="onSelectColor('c4', '#ffc107')"
+            [ngClass]="{'selected-color': activeCid == 'c4'}"></div>
+          <div class="c5" (click)="onSelectColor('c5', 'white')"
+            [ngClass]="{'selected-color': activeCid == 'c5'}"></div>
+          <div class="c6" (click)="onSelectColor('c6', 'black')"
+            [ngClass]="{'selected-color': activeCid == 'c6'}"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

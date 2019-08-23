@@ -13,6 +13,12 @@ export class AppComponent implements OnInit {
   activeCid = 'c1';
   selectedColor = '#f44336';
 
+  cornerProperties = {
+    transparentCorners: false,
+    cornerStyle: 'circle',
+    cornerColor: '#1b95e0'
+  };
+
   ngOnInit(): void {
     fabric.Object.prototype.objectCaching = false;
 
@@ -39,7 +45,7 @@ export class AppComponent implements OnInit {
       stroke: this.selectedColor,
       strokeWidth: 3,
       fill: 'transparent',
-      transparentCorners: false
+      ...this.cornerProperties
     });
 
     this.canvas.add(rectangle);
@@ -54,7 +60,7 @@ export class AppComponent implements OnInit {
       stroke: this.selectedColor,
       strokeWidth: 3,
       fill: 'transparent',
-      transparentCorners: false
+      ...this.cornerProperties
     });
 
     this.canvas.add(circle);
@@ -68,7 +74,8 @@ export class AppComponent implements OnInit {
       fontFamily: 'arial black',
       fill: this.selectedColor,
       fontSize: 20,
-      transparentCorners: false
+      transparentCorners: false,
+      ...this.cornerProperties
     });
 
     this.canvas.add(text);
@@ -96,7 +103,8 @@ export class AppComponent implements OnInit {
       left: 100,
       top: 100,
       stroke: this.selectedColor,
-      strokeWidth: 3
+      strokeWidth: 3,
+      ...this.cornerProperties
     });
 
     this.canvas.add(line);
