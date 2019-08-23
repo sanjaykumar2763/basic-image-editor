@@ -138,6 +138,10 @@ export class AppComponent implements OnInit {
     this.canvas.remove(this.canvas.getActiveObject());
   }
 
+  public onColorPickerClose(event: string, data: any): void {
+    this.onSelectColor('', data);
+  }
+
   onSelectColor(cid: string, selectedColor: string) {
     this.activeCid = cid;
     this.selectedColor = selectedColor;
