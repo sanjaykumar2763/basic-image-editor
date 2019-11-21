@@ -1,26 +1,35 @@
 declare const fabric: any;
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import jsPDF from "jspdf";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  imageUrl = 'assets/waves.jpg';
+  imageUrl = "assets/waves.jpg";
+
+  names = ["San"];
 
   canvas: any;
-  activeCid = 'c1';
-  selectedColor = '#f44336';
+  activeCid = "c1";
+  selectedColor = "#f44336";
 
   cornerProperties = {
     transparentCorners: false,
-    cornerStyle: 'circle',
-    cornerColor: '#1b95e0'
+    cornerStyle: "circle",
+    cornerColor: "#1b95e0"
   };
 
+  addName() {
+    this.names.push(this.makeid(5));
+  }
+
   ngOnInit(): void {
-    this.canvas = new fabric.Canvas('image-editor');
+    console.log("jsPDF: ", jsPDF);
+    console.log("fabric: ", fabric);
+    this.canvas = new fabric.Canvas("image-editor");
 
     fabric.Image.fromURL(this.imageUrl, image => {
       this.canvas.setBackgroundImage(
@@ -49,6 +58,7 @@ export class AppComponent implements OnInit {
     };
 
     this.onAddArrow();
+    this.onAddText("${name}");
   }
 
   onAddRectangle() {
@@ -59,7 +69,7 @@ export class AppComponent implements OnInit {
       height: 70,
       stroke: this.selectedColor,
       strokeWidth: 3,
-      fill: 'transparent',
+      fill: "transparent",
       ...this.cornerProperties
     });
 
@@ -74,7 +84,7 @@ export class AppComponent implements OnInit {
       radius: 30,
       stroke: this.selectedColor,
       strokeWidth: 3,
-      fill: 'transparent',
+      fill: "transparent",
       ...this.cornerProperties
     });
 
@@ -82,11 +92,11 @@ export class AppComponent implements OnInit {
     this.canvas.setActiveObject(circle);
   }
 
-  onAddText() {
-    const text = new fabric.IText('Tap and Type', {
+  onAddText(defaultText?: string) {
+    const text = new fabric.IText(defaultText || "Tap and Type", {
       top: 100,
       left: 100,
-      fontFamily: 'arial black',
+      fontFamily: "arial black",
       fill: this.selectedColor,
       fontSize: 20,
       transparentCorners: false,
@@ -103,7 +113,7 @@ export class AppComponent implements OnInit {
     this.canvas.freeDrawingBrush.width = 20;
     this.canvas.isDrawingMode = true;
 
-    this.canvas.on('mouse:up', opt => {
+    this.canvas.on("mouse:up", opt => {
       if (this.canvas.isDrawingMode) {
         const c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl);
         this.canvas.contextTopDirty = true;
@@ -118,16 +128,16 @@ export class AppComponent implements OnInit {
     const arrow = new fabric.Polyline(points, {
       fill: this.selectedColor,
       strokeWidth: 0,
-      originX: 'left',
-      originY: 'top',
+      originX: "left",
+      originY: "top",
       ...this.cornerProperties
     });
-    arrow.setControlVisible('tl', false);
-    arrow.setControlVisible('tr', false);
-    arrow.setControlVisible('bl', false);
-    arrow.setControlVisible('br', false);
-    arrow.setControlVisible('mt', false);
-    arrow.setControlVisible('mb', false);
+    arrow.setControlVisible("tl", false);
+    arrow.setControlVisible("tr", false);
+    arrow.setControlVisible("bl", false);
+    arrow.setControlVisible("br", false);
+    arrow.setControlVisible("mt", false);
+    arrow.setControlVisible("mb", false);
 
     this.canvas.add(arrow);
 
@@ -139,7 +149,7 @@ export class AppComponent implements OnInit {
   }
 
   public onColorPickerClose(event: string, data: any): void {
-    this.onSelectColor('', data);
+    this.onSelectColor("", data);
   }
 
   onSelectColor(cid: string, selectedColor: string) {
@@ -150,7 +160,7 @@ export class AppComponent implements OnInit {
     if (activeObject) {
       activeObject.stroke = this.selectedColor;
 
-      if (activeObject.get('type') === 'polyline') {
+      if (activeObject.get("type") === "polyline") {
         activeObject.fill = this.selectedColor;
       }
 
@@ -209,5 +219,48 @@ export class AppComponent implements OnInit {
     ];
 
     return points;
+  }
+
+  downloadPdf() {
+    console.log("all names:", this.names);
+    const canvasJsonString = JSON.stringify(this.canvas.toJSON());
+
+    for (const name of this.names) {
+      const ob1 = JSON.parse(canvasJsonString);
+      ob1.objects
+        .filter(o => o.type === "i-text")
+        .forEach(io => (io.text = io.text.replace("${name}", name)));
+
+      // console.log("name: ", name);
+      this.createCanvasAndDownload(ob1, name);
+    }
+  }
+
+  createCanvasAndDownload(formattedObject, name) {
+    const tc1 = new fabric.StaticCanvas("tempCanvas", {
+      width: 900,
+      height: 400
+    });
+    tc1.loadFromJSON(formattedObject, () => {
+      this.generatePdf(tc1.toDataURL("png"), name + ".pdf");
+    });
+  }
+
+  generatePdf(image, pdfName) {
+    const doc = new jsPDF();
+
+    doc.addImage(image, "PNG", 0, 0);
+    doc.save(pdfName);
+  }
+
+  makeid(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 }

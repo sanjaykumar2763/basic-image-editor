@@ -9,6 +9,21 @@
       </div>
     </div>
 
+    <div>
+      <input
+        type="text"
+        *ngFor="let name of names; let i = index"
+        [(ngModel)]="names[i]"
+        name="nm{{ i }}"
+      />
+    </div>
+    <br />
+    <button (click)="addName()">Add</button>
+    <br />
+    <button class="btn btn-danger" (click)="downloadPdf()">
+      <i class="fa fa-file-pdf"></i> Download PDF
+    </button>
+
     <div class="row mt-3">
       <div class="m-auto">
         <div class="components">
@@ -79,3 +94,5 @@
     </div>
   </div>
 </div>
+
+<canvas id="tempCanvas" class="d-none"></canvas>
