@@ -242,13 +242,25 @@ export class AppComponent implements OnInit {
       height: 400
     });
     tc1.loadFromJSON(formattedObject, () => {
-      this.generatePdf(tc1.toDataURL("png"), name + ".pdf");
+      this.generatePdf(
+        tc1.toDataURL("png", 1.0),
+        name + ".pdf",
+        this.canvas.width,
+        this.canvas.height
+      );
     });
   }
 
-  generatePdf(image, pdfName) {
-    const doc = new jsPDF();
+  generatePdf(image, pdfName, width, height) {
+    const doc = new jsPDF("l", "px", [width * 0.75, height * 0.75]);
 
+    console.log("pdf width: ", doc.internal.pageSize.getWidth());
+    console.log("pdf height: ", doc.internal.pageSize.getHeight());
+    console.log("canvas width: ", width);
+    console.log("canvas height: ", height);
+
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = doc.internal.pageSize.getHeight();
     doc.addImage(image, "PNG", 0, 0);
     doc.save(pdfName);
   }
